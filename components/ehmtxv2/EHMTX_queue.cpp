@@ -208,7 +208,7 @@ namespace esphome
         {
           color_ = (this->mode == MODE_RAINBOW_CLOCK) ? this->config_->rainbow_color : this->text_color;
           time_t ts = this->config_->clock->now().timestamp;
-          this->config_->display->strftime(xoffset + 15, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, EHMTXv2_TIME_FORMAT,
+          this->config_->display->strftime(xoffset + 7 + 15, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, EHMTXv2_TIME_FORMAT,
                                            this->config_->clock->now());
           if ((this->config_->clock->now().second % 2 == 0) && this->config_->show_seconds)
           {
