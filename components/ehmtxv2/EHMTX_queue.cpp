@@ -208,11 +208,15 @@ namespace esphome
         {
           color_ = (this->mode == MODE_RAINBOW_CLOCK) ? this->config_->rainbow_color : this->text_color;
           time_t ts = this->config_->clock->now().timestamp;
-          this->config_->display->strftime(xoffset + 4 + 15 - 4, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%H", this->config_->clock->now());
-          this->config_->display->print(xoffset + 4 + 15, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, ":");
-          this->config_->display->strftime(xoffset + 4 + 15 + 4, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%M", this->config_->clock->now());
 
           this->config_->display->image(0, 0, this->config_->icons[1]);
+
+          this->config_->display->strftime(xoffset + 4 + 15 - 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%H", this->config_->clock->now());
+          this->config_->display->strftime(xoffset + 4 + 15 + 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%M", this->config_->clock->now());
+          if (this->config_->clock->now().second % 2 == 0)
+          {
+            this->config_->display->print(xoffset + 4 + 15, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, ":");
+          }
 
           if ((this->config_->clock->now().second % 2 == 0) && this->config_->show_seconds)
           {
