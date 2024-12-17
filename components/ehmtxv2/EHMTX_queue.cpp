@@ -222,10 +222,6 @@ namespace esphome
             this->config_->display->print(xoffset + 4 + 15, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, ":");
           }
 
-          if ((this->config_->clock->now().second % 2 == 0) && this->config_->show_seconds)
-          {
-            this->config_->display->draw_pixel_at(0, 0, color_);
-          }
           if (this->mode != MODE_RAINBOW_CLOCK)
           {
             this->config_->draw_day_of_week();
