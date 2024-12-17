@@ -212,8 +212,7 @@ namespace esphome
           this->config_->display->print(xoffset + 4 + 15, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, ":");
           this->config_->display->strftime(xoffset + 4 + 15 + 4, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%M", this->config_->clock->now());
 
-          uint8_t icon = this->find_icon("calblank");
-          this->config_->display->image(0, 0, this->config_->icons[icon]);
+          this->config_->display->image(0, 0, this->config_->icons[1]);
 
           if ((this->config_->clock->now().second % 2 == 0) && this->config_->show_seconds)
           {
