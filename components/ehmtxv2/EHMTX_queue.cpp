@@ -208,12 +208,13 @@ namespace esphome
         {
           auto red = Color(255, 0, 0);
           auto white = Color(255, 255, 255);
+          auto black = Color(0, 0, 0);
           color_ = (this->mode == MODE_RAINBOW_CLOCK) ? this->config_->rainbow_color : this->text_color;
           time_t ts = this->config_->clock->now().timestamp;
 
           this->config_->display->filled_rectangle(0, 0, 7, 2, red);
-          this->config_->display->filled_rectangle(0, 2, 7, 5, white);
-          this->config_->display->strftime(xoffset + 4 + 15 - 5, yoffset, font, esphome::display::COLOR_OFF, display::TextAlign::BASELINE_CENTER, "%d", this->config_->clock->now());
+          this->config_->display->filled_rectangle(0, 2, 7, 6, white);
+          this->config_->display->strftime(xoffset + 4, yoffset + 1, font, black, display::TextAlign::BASELINE_CENTER, "%d", this->config_->clock->now());
 
           this->config_->display->strftime(xoffset + 4 + 15 - 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%H", this->config_->clock->now());
           this->config_->display->strftime(xoffset + 4 + 15 + 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%M", this->config_->clock->now());
