@@ -206,8 +206,8 @@ namespace esphome
       case MODE_CLOCK:
         if (this->config_->clock->now().is_valid()) // valid time
         {
-          red = Color(255, 0, 0);
-          white = Color(255, 255, 255);
+          auto red = Color(255, 0, 0);
+          auto white = Color(255, 255, 255);
           color_ = (this->mode == MODE_RAINBOW_CLOCK) ? this->config_->rainbow_color : this->text_color;
           time_t ts = this->config_->clock->now().timestamp;
 
