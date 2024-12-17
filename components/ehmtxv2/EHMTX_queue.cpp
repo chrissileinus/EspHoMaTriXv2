@@ -215,11 +215,11 @@ namespace esphome
           this->config_->display->filled_rectangle(0, 2, 9, 6, white);
           this->config_->display->strftime(xoffset + 4, yoffset + 1, font, black, display::TextAlign::BASELINE_CENTER, "%d", this->config_->clock->now());
 
-          this->config_->display->strftime(xoffset + 4 + 15 - 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%H", this->config_->clock->now());
-          this->config_->display->strftime(xoffset + 4 + 15 + 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%M", this->config_->clock->now());
+          this->config_->display->strftime(xoffset + 20 - 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%H", this->config_->clock->now());
+          this->config_->display->strftime(xoffset + 20 + 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%M", this->config_->clock->now());
           if (this->config_->clock->now().second % 2 == 0)
           {
-            this->config_->display->print(xoffset + 4 + 15, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, ":");
+            this->config_->display->print(xoffset + 20, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, ":");
           }
 
           if (this->mode != MODE_RAINBOW_CLOCK)
