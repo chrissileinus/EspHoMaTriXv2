@@ -209,9 +209,6 @@ namespace esphome
           auto red = Color(255, 0, 0);
           auto white = Color(255, 255, 255);
           auto black = Color(0, 0, 0);
-          auto dark = Color(25, 25, 25);
-
-          auto seconds_ = (this->config_->clock->now().second % 2 == 0) ? color_ : dark;
           color_ = (this->mode == MODE_RAINBOW_CLOCK) ? this->config_->rainbow_color : this->text_color;
 
           this->config_->display->filled_rectangle(0, 0, 9, 2, red);
@@ -220,7 +217,10 @@ namespace esphome
 
           this->config_->display->strftime(xoffset + 4 + 15 - 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%H", this->config_->clock->now());
           this->config_->display->strftime(xoffset + 4 + 15 + 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%M", this->config_->clock->now());
-          this->config_->display->print(xoffset + 4 + 15, yoffset, font, seconds_, display::TextAlign::BASELINE_CENTER, ":");
+          if (this->config_->clock->now().second % 2 == 0)
+          {
+            this->config_->display->print(xoffset + 4 + 15, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, ":");
+          }
 
           if ((this->config_->clock->now().second % 2 == 0) && this->config_->show_seconds)
           {
