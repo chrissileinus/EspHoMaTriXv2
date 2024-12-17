@@ -210,8 +210,9 @@ namespace esphome
           auto white = Color(255, 255, 255);
           auto black = Color(0, 0, 0);
           auto dark = Color(25, 25, 25);
+
+          auto seconds_ = (this->config_->clock->now().second % 2 == 0) ? color_ : dark;
           color_ = (this->mode == MODE_RAINBOW_CLOCK) ? this->config_->rainbow_color : this->text_color;
-          seconds_ = (this->config_->clock->now().second % 2 == 0) ? color_ : dark;
 
           this->config_->display->filled_rectangle(0, 0, 9, 2, red);
           this->config_->display->filled_rectangle(0, 2, 9, 6, white);
