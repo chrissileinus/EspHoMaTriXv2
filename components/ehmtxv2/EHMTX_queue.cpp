@@ -211,7 +211,7 @@ namespace esphome
           color_ = (this->mode == MODE_RAINBOW_CLOCK) ? this->config_->rainbow_color : this->text_color;
           time_t ts = this->config_->clock->now().timestamp;
 
-          this->config_->display->filled_rectangle(0, 0, 7, 1, red);
+          this->config_->display->filled_rectangle(0, 0, 7, 2, red);
           this->config_->display->filled_rectangle(0, 2, 7, 5, white);
           this->config_->display->strftime(xoffset + 4 + 15 - 5, yoffset, font, esphome::display::COLOR_OFF, display::TextAlign::BASELINE_CENTER, "%d", this->config_->clock->now());
 
