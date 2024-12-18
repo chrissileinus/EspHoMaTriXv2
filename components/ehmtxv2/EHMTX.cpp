@@ -2564,11 +2564,11 @@ namespace esphome
           if (((!EHMTXv2_WEEK_START) && (dow == i)) ||
               ((EHMTXv2_WEEK_START) && ((dow == (i + 1)) || ((dow == 0 && i == 6)))))
           {
-            this->display->line(8 + 2 + i * 3, 7, 8 + i * 3 + 3, 7, this->today_color);
+            this->display->line(2 + i * 4, ypos + 7, i * 4 + 4, ypos + 7, this->today_color);
           }
           else
           {
-            this->display->line(8 + 2 + i * 3, 7, 8 + i * 3 + 3, 7, this->weekday_color);
+            this->display->line(2 + i * 4, ypos + 7, i * 4 + 4, ypos + 7, this->weekday_color);
             if (accent_color != esphome::display::COLOR_OFF)
             {
               this->display->line(i * 4 + 3, ypos + 7, i * 4 + 3, ypos + 7, accent_color);

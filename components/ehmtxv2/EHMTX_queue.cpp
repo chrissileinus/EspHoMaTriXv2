@@ -560,25 +560,33 @@ namespace esphome
       case MODE_CLOCK:
         if (this->config_->clock->now().is_valid()) // valid time
         {
-          auto red = Color(255, 0, 0);
-          auto white = Color(255, 255, 255);
-          auto black = Color(0, 0, 0);
           color_ = (this->mode == MODE_RAINBOW_CLOCK) ? this->config_->rainbow_color : this->text_color;
-
-          this->config_->display->filled_rectangle(0, 0, 9, 2, red);
-          this->config_->display->filled_rectangle(0, 2, 9, 6, white);
-          this->config_->display->strftime(xoffset + 4, yoffset + 1, font, black, display::TextAlign::BASELINE_CENTER, "%d", this->config_->clock->now());
-
-          this->config_->display->strftime(xoffset + 20 - 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%H", this->config_->clock->now());
-          this->config_->display->strftime(xoffset + 20 + 5, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%M", this->config_->clock->now());
-          if (this->config_->clock->now().second % 2 == 0)
+          time_t ts = this->config_->clock->now().timestamp;
+#ifdef EHMTXv2_ADV_CLOCK
+          if (!this->config_->draw_clock(EHMTXv2_TIME_FORMAT_BIG, font, color_, xoffset + 15, this->ypos() + yoffset))
           {
-            this->config_->display->print(xoffset + 20, yoffset, font, color_, display::TextAlign::BASELINE_CENTER, ":");
+#endif
+            if (this->config_->replace_time_date_active) // check for replace active
+            {
+              std::string time_new = this->config_->clock->now().strftime(EHMTXv2_TIME_FORMAT).c_str();
+              time_new = this->config_->replace_time_date(time_new);
+              this->config_->display->printf(xoffset + 15, this->ypos() + yoffset, font, color_, display::TextAlign::BASELINE_CENTER, "%s", time_new.c_str());
+            }
+            else
+            {
+              this->config_->display->strftime(xoffset + 15, this->ypos() + yoffset, font, color_, display::TextAlign::BASELINE_CENTER, EHMTXv2_TIME_FORMAT,
+                                               this->config_->clock->now());
+            }
+            if (this->config_->show_seconds && (this->config_->clock->now().second % 2 == 0))
+            {
+              this->config_->display->draw_pixel_at(0, 0, color_);
+            }
+#ifdef EHMTXv2_ADV_CLOCK
           }
-
+#endif
           if (this->mode != MODE_RAINBOW_CLOCK)
           {
-            this->config_->draw_day_of_week();
+            this->config_->draw_day_of_week(this->ypos());
           }
         }
         else
