@@ -71,6 +71,7 @@ namespace esphome
     std::vector<EHMTXNextClockTrigger *> on_next_clock_triggers_;
     std::vector<EHMTXStartRunningTrigger *> on_start_running_triggers_;
     std::vector<EHMTXAddScreenTrigger *> on_add_screen_triggers_;
+    EHMTX_queue *find_queue_element_by_id(std::string id);
     EHMTX_queue *find_icon_queue_element(uint8_t icon);
     EHMTX_queue *find_free_queue_element();
 
@@ -159,6 +160,9 @@ namespace esphome
     void hide_rindicator();
     void hide_lindicator();
     void hide_alarm();
+
+    void set_screen(std::string id, std::string icon, std::string text, int lifetime = D_LIFETIME, int screen_time = D_SCREEN_TIME, bool default_font = true, int r = C_RED, int g = C_GREEN, int b = C_BLUE);
+
     void full_screen(std::string icon, int lifetime = D_LIFETIME, int screen_time = D_SCREEN_TIME);
     void icon_screen(std::string icon, std::string text, int lifetime = D_LIFETIME, int screen_time = D_SCREEN_TIME, bool default_font = true, int r = C_RED, int g = C_GREEN, int b = C_BLUE);
     void text_screen(std::string text, int lifetime = D_LIFETIME, int screen_time = D_SCREEN_TIME, bool default_font = true, int r = C_RED, int g = C_GREEN, int b = C_BLUE);
@@ -214,10 +218,12 @@ namespace esphome
     show_mode mode;
 
 #ifdef USE_ESP32
+    PROGMEM std::string id;
     PROGMEM std::string text;
     PROGMEM std::string icon_name;
 #endif
 #ifdef USE_ESP8266
+    std::string id;
     std::string text;
     std::string icon_name;
 #endif
