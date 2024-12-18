@@ -747,46 +747,6 @@ namespace esphome
     }
   }
 
-  void EHMTX::set_screen(std::string id, std::string iconname = "", std::string text = "", int lifetime = D_LIFETIME, int screen_time = D_SCREEN_TIME)
-  {
-    EHMTX_queue *screen = this->find_queue_element_by_id(id);
-
-    // Detect Mode
-    screen->mode = MODE_TEXT_SCREEN;
-    screen->icon_name = "";
-    screen->icon = 0;
-    screen->text = text;
-    
-    uint8_t icon = this->find_icon(iconname.c_str());
-    if (
-      text != "" &&
-      icon <= this->icon_count
-    ) {
-      screen->mode = MODE_ICON_SCREEN;
-      screen->icon_name = iconname;
-      screen->icon = icon;
-    }
-
-    if (
-      text == "" &&
-      icon <= this->icon_count
-    ) {
-      screen->mode == MODE_FULL_SCREEN
-    }
-
-    screen->endtime = this->clock->now().timestamp + lifetime * 60;
-    screen->text_color = Color(C_RED, C_GREEN, C_BLUE);
-    screen->default_font = this->default_font;
-    screen->calc_scroll_time(text, screen_time);
-
-    for (auto *t : on_add_screen_triggers_)
-    {
-      t->process(screen->icon_name, (uint8_t)screen->mode); // add ID
-    }
-    ESP_LOGD(TAG, "icon screen icon: %d iconname: %s text: %s lifetime: %d screen_time: %d", icon, iconname.c_str(), text.c_str(), lifetime, screen_time);
-    screen->status();
-  }
-
   void EHMTX::icon_screen(std::string iconname, std::string text, int lifetime, int screen_time, bool default_font, int r, int g, int b)
   {
     uint8_t icon = this->find_icon(iconname.c_str());
@@ -970,19 +930,6 @@ namespace esphome
     {
       ESP_LOGW(TAG, "date_screen disabled because show_date=false");
     }
-  }
-
-  EHMTX_queue *EHMTX::find_queue_element_by_id(std::string id)
-  {
-    for (size_t i = 0; i < MAXQUEUE; i++)
-    {
-      if ((this->queue[i]->id == id))
-      {
-        ESP_LOGD(TAG, "free_screen: found by id");
-        return this->queue[i];
-      }
-    }
-    return this->find_free_queue_element();
   }
 
   EHMTX_queue *EHMTX::find_icon_queue_element(uint8_t icon)

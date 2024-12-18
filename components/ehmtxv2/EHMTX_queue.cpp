@@ -10,7 +10,6 @@ namespace esphome
     this->last_time = 0;
     this->screen_time_ = 0;
     this->mode = MODE_EMPTY;
-    this->id = "";
     this->icon_name = "";
     this->icon = 0;
     this->text = "";
